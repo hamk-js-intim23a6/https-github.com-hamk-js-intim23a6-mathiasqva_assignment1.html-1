@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tehtävä #1 - HTML5-lomakkeet ja lomakkeen syötteen käsittely</title>
+</head>
+<body>
+
+    <h1>Lomaketehtävä</h1>
+    
+    <form id="userForm">
+        <label for="fullName">Koko nimi:</label>
+        <input type="text" id="fullName" name="fullName" required autofocus placeholder="Anna koko nimesi" maxlength="80"><br><br>
+
+        <label for="password">Salasana:</label>
+        <input type="password" id="password" name="password" required 
+               pattern="[a-zA-Z0-9_.\-:;?!]{8,20}"><br><br>
+
+        <label for="passwordAgain">Salasana uudelleen:</label>
+        <input type="password" id="passwordAgain" name="passwordAgain" required 
+               pattern="[a-zA-Z0-9_.\-:;?!]{8,20}"><br><br>
+
+        <label>Sukupuoli:</label>
+        <input type="radio" id="male" name="gender" value="male" required>
+        <label for="male">Mies</label>
+        <input type="radio" id="female" name="gender" value="female" required>
+        <label for="female">Nainen</label>
+        <input type="radio" id="other" name="gender" value="other" required>
+        <label for="other">Muu</label><br><br>
+
+        <label>Harrastukset:</label>
+        <input type="checkbox" id="games" name="hobbies" value="games">
+        <label for="games">Pelit</label>
+        <input type="checkbox" id="music" name="hobbies" value="music">
+        <label for="music">Musiikki</label>
+        <input type="checkbox" id="sports" name="hobbies" value="sports">
+        <label for="sports">Urheilu</label>
+        <input type="checkbox" id="tv" name="hobbies" value="tv">
+        <label for="tv">TV</label><br><br>
+
+        <label for="birthDate">Syntymäpäivä:</label>
+        <input type="date" id="birthDate" name="birthDate"><br><br>
+
+        <label for="height">Pituus:</label>
+        <input type="range" id="heightRange" name="height" min="40" max="300" oninput="syncHeight()">
+        <input type="number" id="heightNumber" min="40" max="300" oninput="syncHeight()"><br><br>
+
+        <label for="favoriteColor">Lempiväri:</label>
+        <input type="color" id="favoriteColor" name="favoriteColor"><br><br>
+
+        <label for="homeCountry">Kotimaa:</label>
+        <select id="homeCountry" name="homeCountry">
+            <option value="Finland">Suomi</option>
+            <option value="Russia">Venäjä</option>
+            <option value="Sweden">Ruotsi</option>
+            <option value="Norway">Norja</option>
+            <option value="Denmark">Tanska</option>
+            <option value="Estonia">Viro</option>
+            <option value="Latvia">Latvia</option>
+            <option value="Lithuania">Liettua</option>
+        </select><br><br>
+
+        <label for="profession">Ammatti:</label>
+        <input list="professions" id="profession" name="profession">
+        <datalist id="professions">
+            <option value="Lääkäri">
+            <option value="Tuotepäällikkö">
+            <option value="Lakimies">
+            <option value="Myyntiedustaja">
+        </datalist><br><br>
+
+        <label for="message">Viesti:</label><br>
+        <textarea id="message" name="message" required rows="6" cols="60" placeholder="Kirjoita viestisi tähän..." maxlength="1000"></textarea><br><br>
+
+        <button type="button" onclick="validateForm()">Lähetä</button>
+    </form>
+
+    <h2>Lomakkeen tuloste:</h2>
+    <div id="output"></div>
+
+    <script src="script.js"></script>
+    <script>
+    function validateForm() {
+        const password = document.getElementById('password').value;
+        const passwordAgain = document.getElementById('passwordAgain').value;
+        if (password !== passwordAgain) {
+            alert('Salasanat eivät täsmää.');
+            return false;
+        }
+
+        const formData = new FormData(document.getElementById('userForm'));
+        let output = '<h3>Lomakkeen tiedot:</h3>';
+        formData.forEach((value, key) => {
+            output += `<p><strong>${key}:</strong> ${value}</p>`;
+        });
+
+        document.getElementById('output').innerHTML = output;
+        return true;
+    }
+    </script>
+
+</body>
+</html>
